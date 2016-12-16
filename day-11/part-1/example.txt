@@ -1,0 +1,4 @@
+The first floor contains a strontium-compatible microchip and a plutonium-compatible microchip.
+The second floor contains a strontium generator.
+The third floor contains a plutonium generator.
+The fourth floor contains nothing relevant.
