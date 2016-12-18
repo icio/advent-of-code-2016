@@ -22,17 +22,9 @@ func findPath(fav uint, orig, dest pos) (*step, error) {
 		p := paths[0]
 		paths = paths[1:]
 
-		minDX := -1
-		if p.x == 0 {
-			minDX = 1
-		}
-		minDY := -1
-		if p.y == 0 {
-			minDY = 1
-		}
-		for dy := minDY; dy < 2; dy += 1 {
-			for dx := minDX; dx < 2; dx += 1 {
-				if (dx != 0 && dy != 0) || (dx == 0 && dy == 0) {
+		for dy := -1; dy < 2; dy += 1 {
+			for dx := -1; dx < 2; dx += 1 {
+				if (p.x == 0 && dx < 0) || (p.y == 0 && dy < 0) || (dx == 0) == (dy == 0) {
 					continue
 				}
 
