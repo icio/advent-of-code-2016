@@ -1,0 +1,3 @@
+Both part-1 and part-2 suffer from what is likely a slight mistranslation of
+the problem: The correct answer to parts 1 and 2 is found as the 65th valid
+hash produced. Are `xxxxx` hashes never valid keys?
