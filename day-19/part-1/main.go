@@ -4,44 +4,47 @@ import (
 	"fmt"
 )
 
+type elf struct {
+	name int
+	out  bool
+	next int
+}
+
 func main() {
-	n := 3012210
+	N := 3012210
+	n := N
 
 	// Give 1 present per elf.
-	p := make([]int, n)
+	p := make([]elf, n)
 	for i := 0; i < n; i++ {
-		p[i] = 1
+		e := &p[i]
+		e.name = i + 1
+		e.next = (i + 1) % n
 	}
 
 	i := 0
-	for {
-		if p[i] == 0 {
-			i = (i + 1) % n
-			continue
+	for n > 1 {
+		curr := &p[i]
+
+		// Find the next elf to take out of the game.
+		next := &p[curr.next]
+		for next.out {
+			next = &p[next.next]
 		}
 
-		// Find elf j to steal from.
-		j := (i + 1) % n
-		for ; j != i; j = (j + 1) % n {
-			if p[j] > 0 {
-				break
-			}
+		next.out = true
+		n--
+
+		// Point the current elf to the next remaining elf.
+		for next.out {
+			next = &p[next.next]
 		}
 
-		// Check if we went full circle.
-		if j == i {
-			panic(fmt.Errorf("%d is the only elf left. Should have returned elsewhere.", i+1))
-		}
-
-		// Steal presents for i from j.
-		fmt.Printf("Elf %d steals %d presents from Elf %d.\n", i+1, p[j], j+1)
-		p[i], p[j] = p[i]+p[j], 0
-
-		if p[i] == n {
-			fmt.Printf("All %d presents end up with Elf %d.\n", p[i], i+1)
-			return
-		}
-
-		i = (j + 1) % n
+		// Progress to the next elf to take a shot.
+		i = next.name - 1
+		curr.next = i
 	}
+
+	fmt.Printf("i=%v, n=%v, p[i]=%+v\n", i, n, p[i])
+	fmt.Printf("Elf %d ends up with all of the presents.\n", p[i].name)
 }
